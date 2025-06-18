@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jokes Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-sky-400 to bg-red-400 w-screen h-screen flex justify-center items-center">
+    <div class="w-[60vw] p-5 bg-white text-center rounded-xl shadow-xl">
+        <h1 class="text-3xl font-bold">
+            <span class="text-4xl">&#128514;</span>
+            Random Jokes Generator
+        </h1>
+        <div class="jokes-container py-4">
+            <div class="setup text-xl font-semibold text-gray-500">Click the button for jokes</div>
+            <div class="punchline text-sm text-gray-400">.....</div>
+        </div>
+        <div class="flex justify-center items-center gap-4">
+            <button
+                class="button1 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-200"
+                onclick="getjoke()">Get Joke
+            </button>
+
+        </div>
+    </div>
+</body>
+<script>
+
+    let setup = document.querySelector(".setup");
+    let punchline = document.querySelector(".punchline");
+
+    function speak(text) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "en-IN";
+        utterance.rate = 1;
+
+        utterance.onend = () => {
+            document.getElementById("laugh-audio").play();
+        };
+
+        speechSynthesis.speak(utterance);
+    }
+
+    async function getjoke() {
+
+        setup.innerText = "Loading...";
+        punchline.innerText = "";
+
+        let data = await fetch("https://official-joke-api.appspot.com/jokes/random");
+        let joke = await data.json();
+        setup.innerText = joke.setup;
+        punchline.innerText = joke.punchline;
+
+        speak(setup.innerText + " ... " + punchline.innerText);
+    }
+
+
+</script>
+<audio id="laugh-audio" src="laugh.wav"></audio>
+
+</html>

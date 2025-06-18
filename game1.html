@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock_Paper_Scissors</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <div class="main w-[100vw] h-[100vh]">
+        <nav class=" p-3 bg-gray-800 text-white flex justify-between items-center ">
+            <div>
+                Rock Paper Scissors
+            </div>
+            <div>
+                <button class="reset bg-red-600 rounded px-2 py-1 cursor-pointer hover:opacity-80">Reset</button>
+                <button class="change bg-green-600 rounded px-2 py-1 cursor-pointer hover:opacity-80">Change</button>
+            </div>
+        </nav>
+        <div class="flex flex-col items-center justify-center">
+            <div class="flex p-4 gap-2">
+                <div class="flex justify-center items-center rounded-[50%] w-[40%] h-[40%]">
+                    <img src="Rock.png" alt="Rock" class="choice rounded-[50%] border-2 border-transparent hover:opacity-80 hover:border-black cursor-pointer" id="rock">
+                </div>
+                <div class="flex justify-center items-center rounded-[50%] w-[40%] h-[40%]">
+                    <img src="Paper.png" alt="Paper" class="choice rounded-[50%] border-2 border-transparent hover:opacity-80 hover:border-black cursor-pointer" id="paper">
+                </div>
+                <div class="flex justify-center items-center rounded-[50%] w-[40%] h-[40%]">
+                    <img src="Scissors.png" alt="Scissor" class="choice rounded-[50%] border-2 border-transparent hover:opacity-80 hover:border-black cursor-pointer"  id="scissor">
+                </div>
+            </div>
+            <div class="p-2 font-medium flex gap-20 text-center justify-center">
+                <div>
+                    <div id="win">0</div>
+                    <div>You</div>
+                </div>
+                <div>
+                    <div id="comp">0</div>
+                    <div>Comp</div>
+                </div>
+                <div>
+                    <div id="draw">0</div>
+                    <div>Draw</div>
+                </div>
+            </div>
+            <div class="p-4 flex justify-center items-center">
+                <p class="decision bg-green-600 p-2 rounded text-white">
+                   Choose any of the following 
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let user_score = 0;
+    let comp_score = 0;
+    let draw_score = 0;
+    
+    let choice = document.querySelectorAll(".choice");
+
+    let reset = document.querySelector(".reset");
+    let change = document.querySelector(".change");
+    let decision = document.querySelector(".decision");
+    const userScoreDisplay = document.getElementById("win");
+    const compScoreDisplay = document.getElementById("comp");
+    const drawScoreDisplay = document.getElementById("draw");
+
+
+    change.addEventListener("click",()=>{
+        const mainDiv = document.querySelector(".main");
+        mainDiv.classList.toggle("bg-gray-800");
+        mainDiv.classList.toggle("text-white");
+    });
+
+    reset.addEventListener("click",()=>{
+        user_score = 0;
+        comp_score = 0;
+        draw_score = 0;
+        updatescores();
+        decision.textContent = "Choose any of the following";
+        decision.className = "decision bg-green-600 p-2 rounded text-white";
+    });
+
+    function computer_choice() {
+        let result = ["rock", "paper", "scissor"];
+        return result[Math.floor(Math.random() * 3)];
+    }
+
+    function updatescores(){
+        userScoreDisplay.textContent = user_score;
+        compScoreDisplay.textContent = comp_score;
+        drawScoreDisplay.textContent = draw_score;
+    }
+    
+    choice.forEach(element => {
+        element.addEventListener("click",()=>{
+            const user_choice = element.getAttribute("id");
+            playgame(user_choice);
+        });
+    });
+
+    function playgame(user_choice){
+        const comp_choice = computer_choice();
+        let userwin = true;
+        if(user_choice === comp_choice){
+            draw_score++;
+            decision.textContent = `It's a Draw! You both chose ${user_choice}`;
+            decision.className = "decision bg-yellow-500 p-2 rounded text-white";
+        }
+        else{
+            if(user_choice === "rock"){
+                userwin = comp_choice ==='paper' ? false : true;
+            }
+            else if(user_choice === "paper"){
+                userwin = comp_choice ==='scissor' ? false : true;
+            }
+            else{
+                userwin = comp_choice ==='rock' ? false : true;
+            }
+            if(userwin){
+                user_score++;
+                decision.textContent = `You Won! you chose ${user_choice} and comp chose ${comp_choice}`;
+                decision.className = "decision bg-green-500 p-2 rounded text-white";
+            }
+            else{
+                comp_score++;
+                decision.textContent = `You Lost! you chose ${user_choice} and comp chose ${comp_choice}`;
+                decision.className = "decision bg-red-500 p-2 rounded text-white";
+            }
+        }
+        updatescores();
+    }
+    
+</script>
+</html>
