@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Image Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+    <div class="max-w-5xl mx-auto">
+        <h1 class="text-3xl font-bold text-center text-blue-700 mb-6">Dynamic Image Gallery</h1>
+
+        <div class="mb-6 flex gap-4 justify-center">
+            <input type="text" id="image-url" placeholder="Enter image URL"
+                class="w-2/3 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500">
+            <button onclick="addImage()"
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Add Image</button>
+        </div>
+
+        <div id="gallery" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <img src="https://picsum.photos/200?random=1" class="rounded-lg shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+            <img src="https://picsum.photos/200?random=2" class="rounded-lg shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+            <img src="https://picsum.photos/200?random=3" class="rounded-lg shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+            <img src="https://picsum.photos/200?random=4" class="rounded-lg shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+            <img src="https://picsum.photos/200?random=5" class="rounded-lg shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+            <img src="https://picsum.photos/200?random=6" class="rounded-lg shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+            <img src="https://picsum.photos/200?random=7" class="rounded-lg shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+            <img src="https://picsum.photos/200?random=8" class="rounded-lg shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+            <img src="https://picsum.photos/200?random=9" class="rounded-lg shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+        </div>
+    </div>
+
+    <script>
+        function addImage() {
+            const input = document.getElementById('image-url');
+            const url = input.value.trim();
+            if (url) {
+                const img = document.createElement('img');
+                img.src = url;
+                img.className = "rounded-lg shadow-md";
+                document.getElementById('gallery').appendChild(img);
+                input.value = '';
+            } else {
+                alert("Please enter a valid image URL.");
+            }
+        }
+    </script>
+</body>
+</html>
